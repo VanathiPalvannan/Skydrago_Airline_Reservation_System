@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>home</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<style type="text/css">
+		body{
+			background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+			height:597px;
+		}
+		th{
+			background-image: linear-gradient(135deg, #6B73FF 10%, #000DFF 100%);
+		}
+	</style>
+	
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header" data-toggle="collapse" data-target="#myNavbar">
+                <button class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">SkyDrago Airlines</a>
+            </div>
+            <div class="collapse navbar-collapse " id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/home">Home</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="input">Upload details</a></li>
+                    <li sec:authorize="hasAnyAuthority('USER','ADMIN')"><a href="view">Flight Details</a></li>
+                    <li sec:authorize="hasAnyAuthority('USER')"><a href="ticketsbooked">Tickets Booked</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="userview">User Details</a></li>
+                    <li sec:authorize="hasAnyAuthority('STAFF')"><a href="passengersearch">Passenger Search</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')" ><a href="/feedbackview">Feedback</a></li>
+                    <li sec:authorize="hasAnyAuthority('USER')"><a href="aboutus">About Us</a></li>
+                    <li sec:authorize="isAnonymous()"><a href="aboutus">About Us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li sec:authorize="isAnonymous()"><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li class="dropdown" sec:authorize="hasAnyAuthority('USER','ADMIN','STAFF')">
+                        <div  class="btn btn-group">
+                            
+							  <a href="#" class="btn btn-primary" th:text="${#authentication.getPrincipal().getUsername()}">Guest User</a>
+							  
+                            
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span
+                                    class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/useredit"><span class="glyphicon glyphicon-user"></span> Edit profile</a></li>
+                                <li sec:authorize="hasAnyAuthority('USER')"><a href="feedback"><span class="glyphicon glyphicon-envelope"></span> Feedback</a></li>
+                                <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div align="center" style="margin-top: 70px;">
+        <h1>Airline Reservation system</h1>
+
+        <div class="panel" style="width:70%;background-color:#3FD2C7;">
+            <div class="panel-heading">Search Flight</div>
+            <div class="panel-body" style="background-color:#99DDFF;">
+                <form class="form-inline" th:action="@{/homesearch}" method="GET">
+                    <div class="form-group">
+                        <label>Origin:</label>
+                        <select th:name="origin" class="form-control">
+                            <option th:each="p : ${listDO}" th:value="${p}" th:text="${p}" />
+                        </select>
+                        <!--<span class="alert-error" th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}">Origin
+                                error</span>-->
+                    </div>
+                    <div class="form-group">
+                        <label>Destination:</label>
+                        <select th:name="destination" class="form-control">
+                            <option th:each="p : ${listDO}" th:value="${p}" th:text="${p}" />
+                        </select>
+                        <!--<span class="alert-error" th:if="${#fields.hasErrors('destination')}"
+                                th:errors="*{destination}">Destination error</span>-->
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Date:</label>
+                        <input type="date" th:name="date" class="form-control" placeholder="Enter date">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-info"><i class="glyphicon glyphicon-search"></i> Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <center>
+            <h1>Flight Details</h1>
+        </center>
+    	
+        <div align="center" class="table-responsive">
+            <table class="table table-bordered">
+                <tr class="bg-primary">
+                    <th>id</th>
+                    <th>Destination</th>
+                    <th>Duration</th>
+                    <th>Flight date</th>
+                    <th>Flight number</th>
+                    <th>Flight time</th>
+                    <th>origin</th>
+                    <th colspan="2">FirstClass</th>
+                    <th colspan="2">BussinessClass</th>
+                    <th colspan="2">EconomyClass</th>
+                    <th>Total seats</th>
+                    <th>
+                        <div align="center" sec:authorize="hasAnyAuthority('ADMIN')">
+                            Operations</div>
+                        <div align="center" sec:authorize="hasAnyAuthority('USER')">
+                            Book Flight</div>
+                           <div align="center" sec:authorize="isAnonymous()">
+                            Book Flight</div>
+                    </th>
+                </tr>
+                <tr class="active" th:each="flight : ${list}">
+                    <td th:text="${flight.id}"> id</td>
+                    <td th:text="${flight.destination}">Destinstion</td>
+                    <td th:text="${flight.duration}">Duration</td>
+                    <td th:text="${flight.flightDate}">Flight_date</td>
+                    <td th:text="${flight.flightNumber}">Flight_number</td>
+                    <td th:text="${flight.flightTime}">Flight_time</td>
+                    <td th:text="${flight.origin}">Origin</td>
+                    <td th:text="'seats: '+${flight.seats?.firstSeat}"></td>
+                    <td th:text="'cost: '+${flight.seats?.firstCost}"></td>
+                    <td th:text="'seats: '+${flight.seats?.bussinessSeat}"></td>
+                    <td th:text="'cost: '+${flight.seats?.bussinessCost}"></td>
+                    <td th:text="'seats: '+${flight.seats?.economySeat}"></td>
+                    <td th:text="'cost: '+${flight.seats?.economyCost}"></td>
+                    <td th:text="${flight.seats?.firstSeat}+${flight.seats?.economySeat}+${flight.seats?.bussinessSeat}">
+                    </td>
+                    <td>
+                        <div sec:authorize="hasAnyAuthority('ADMIN')">
+                            <a class="btn btn-warning" th:href="@{'/edit/' + ${flight.id}}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{'/delete/' + ${flight.id}}">Delete</a>
+                        </div>
+                        <div sec:authorize="hasAnyAuthority('USER')">
+                            <form th:action="@{'/bookdetail/' + ${flight.id}}">
+                                <button class="btn btn-success" th:disabled="${flight.isBooked}">Book</button>
+                            </form>
+                        </div>
+                        <div sec:authorize="isAnonymous()"><a class="btn btn-success" href="login">Login to Book</a></div>
+                        
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

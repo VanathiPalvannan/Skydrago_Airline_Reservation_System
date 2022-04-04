@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+		body{
+			background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+		}
+        
+
+        h1 {
+            color: white;
+        }
+
+        td {
+            padding: 5px;
+        }
+    </style>
+    <meta charset="ISO-8859-1">
+    <title>Edit flight Details</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header" data-toggle="collapse" data-target="#myNavbar">
+                <button class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">SkyDrago Airlines</a>
+            </div>
+            <div class="collapse navbar-collapse " id="myNavbar">
+                <ul class="nav navbar-nav">
+               		<li><a href="/home">Home</a></li>     	
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown" sec:authorize="hasAnyAuthority('USER','ADMIN','STAFF')">
+                        <div  class="btn btn-group">
+							  <a href="#" class="btn btn-primary" th:text="${#authentication.getPrincipal().getUsername()}">Guest User</a>
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span
+                                    class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li sec:authorize="hasAnyAuthority('USER')"><a href="feedback"><span class="glyphicon glyphicon-envelope"></span> Feedback</a></li>
+                                <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+    <div style="margin-top:70px;">
+    <center>
+        <h1>Edit Your Details</h1>
+    </center>
+    <div align="center">
+
+        <form class="form-inline" action="#" th:action="@{/saveuseredit}" th:object="${user}" method="post">
+            <table>
+                <tr>
+                    <div class="form-group">
+                        <td>User ID:</td>
+                        <td><input class="form-control" type="text" th:field="*{id}" readonly="readonly" /></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>FirstName:</td>
+                        <td><input class="form-control" type="text" th:field="*{firstName}"></td>
+                    	<span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName
+                error</span>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>LastName:</td>
+                        <td><input class="form-control" type="text" th:field="*{lastName}"></td>
+                    	<span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName
+                error error</span>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>MobileNumber:</td>
+                        <td><input class="form-control" type="number" th:field="*{mobileNumber}"></td>
+                    	<span class="text-danger" th:if="${#fields.hasErrors('mobileNumber')}"
+                th:errors="*{mobileNumber}">MobileNumber error</span>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>Email:</td>
+                        <td><input class="form-control" type="email" th:field="*{email}"></td>
+                    	<span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+                error</span>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>DateOfBirth:</td>
+                        <td><input class="form-control" type="date" th:field="*{dob}"></td>
+                   		<span class="text-danger" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}">DateOfBirth
+                error</span>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>AadharNumber:</td>
+                        <td><input class="form-control" type="number" th:field="*{aadharNo}"></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>Gender:</td>
+                        <td>
+                        	 
+                            <input type="radio" class="form-check-input indicator" th:field="*{gender}"
+                                value="Male" />Male
+                            <input type="radio" class="form-check-input" th:field="*{gender}" value="Female" />Female
+                       		<span class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Gender
+                error</span>
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>Username:</td>
+                        <td><input class="form-control" type="text" th:field="*{userName}"></td>
+                    	<span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Username
+                error</span>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>Password:</td>
+                        <td><input class="form-control" type="password" th:field="*{password}" ></td>
+                    	<td><span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>ReTypePassword:</td>
+                        <td><input class="form-control" type="password" th:field="*{rPassword}" ></td>
+                    	 <td><span class="text-danger" th:if="${#fields.hasErrors('rPassword')}" th:errors="*{rPassword}">RePassword error</span></td>
+                    </div>
+                </tr>
+             </table>
+            <div>
+                <button class="btn btn-success btn-block">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

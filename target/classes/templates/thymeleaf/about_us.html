@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>About-Skydrago</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+<style>
+div.thumbnail {
+  box-shadow: 10px 10px 5px grey;
+}
+
+h3 {
+  text-shadow: 2px 2px 5px red;
+}
+body {
+  background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+}
+</style>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header" data-toggle="collapse" data-target="#myNavbar">
+                <button class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">SkyDrago Airlines</a>
+            </div>
+            <div class="collapse navbar-collapse " id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li ><a href="/home">Home</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="input">Upload details</a></li>
+                    <li sec:authorize="hasAnyAuthority('USER','ADMIN')"><a href="view">Flight Details</a></li>
+                    <li sec:authorize="hasAnyAuthority('USER')"><a href="ticketsbooked">Tickets Booked</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="userview">User Details</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')" ><a href="/feedbackview">Feedback</a></li>
+                    <li class="active" sec:authorize="hasAnyAuthority('USER')"><a href="aboutus">About Us</a></li>
+                    <li class="active" sec:authorize="isAnonymous()"><a href="aboutus">About Us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li sec:authorize="isAnonymous()"><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li class="dropdown" sec:authorize="hasAnyAuthority('USER','ADMIN')">
+                        <div  class="btn btn-group">
+                            
+							  <a href="#" class="btn btn-primary" th:text="${#authentication.getPrincipal().getUsername()}">Guest User</a>
+							  
+                            
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span
+                                    class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/useredit"><span class="glyphicon glyphicon-user"></span> Edit profile</a>
+                                </li>
+                                <li><a href="feedback"><span class="glyphicon glyphicon-envelope"></span> Feedback</a></li>
+                              
+                                <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            	
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+	<div style="margin-top:70px">
+		<center><h1>SkyDrago Airline Reservation System</h1></center>
+	<div class="container">
+	<h2>Proposed System</h2>
+	<p>The Proposed system ensures the complete freedom for users, where user at his own system can logon to this website and can book his ticket. Our proposed system allows only registered users to book the tickets, view timings and cancel their tickets.
+	</p>
+	
+	<h2>Purpose</h2>
+	<ul>
+	<li>To automate the Flight ticket registration process without any physical human interaction.
+	</li>
+	<li>To make the Flight ticket registration process accessible anywhere to the Users</li>
+	<li>To allow the admin to Cancel the ticket and efficiently manage their database in an effective manner.
+	</li>
+	</ul>
+	
+	
+		
+</div>
+
+
+
+
+
+
+
+<div class="container">
+<h2>Developers</h2>
+		<div class="col-xs-6 col-sm-4 col-lg-3">
+			<div class="thumbnail  ">
+				<div class="caption  bg-info">
+					<h3 class="text-success">Aravind S</h3>
+					<p class="flex-text text-muted">Working in <b>Kumaran System Private Limited</b> as a <i>Trainee Programmer</i></b></p>
+				</div>
+			</div>
+		</div>
+	<div class="col-xs-6 col-sm-4 col-lg-3">
+			<div class="thumbnail  ">
+				<div class="caption  bg-info">
+					<h3 class="text-success">Sasikumar S</h3>
+					<p class="flex-text text-muted">Working in <b>Kumaran System Private Limited</b> as a <i>Trainee Programmer</i></b></p>
+				</div>
+			</div>
+		</div>
+	<div class="col-xs-6 col-sm-4 col-lg-3">
+			<div class="thumbnail  ">
+				<div class="caption  bg-info">
+					<h3 class="text-success">RameshBabu R</h3>
+					<p class="flex-text text-muted">Working in <b>Kumaran System Private Limited</b> as a <i>Trainee Programmer</i></b></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6 col-sm-4 col-lg-3">
+			<div class="thumbnail  ">
+				<div class="caption  bg-info">
+					<h3 class="text-success">Vanathi P</h3>
+					<p class="flex-text text-muted">Working in <b>Kumaran System Private Limited</b> as a <i>Trainee Programmer</i></b></p>
+				</div>
+			</div>
+		</div>
+</div>	
+	</div>
+	
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>flight detail upload</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <style type="text/css">
+		body{
+			background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+		}
+        label {
+            font-size: 17px;
+        }
+    </style>
+    <style type="text/css">
+        .alert-error {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header" data-toggle="collapse" data-target="#myNavbar">
+                <button class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">SkyDrago Airlines</a>
+            </div>
+            <div class="collapse navbar-collapse " id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/home">Home</a></li>
+                    <li class="active" sec:authorize="hasAnyAuthority('ADMIN')"><a href="input">Upload details</a></li>
+                    <li><a href="view">Flight Details</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="userview">User Details</a></li>
+                    <li><a href="/feedbackview">Feedback</a></li>
+                    <li sec:authorize="hasAnyAuthority('USER')"><a href="aboutus">About Us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <div class="btn btn-group">
+                        	<a href="#" class="btn btn-primary" th:text="${#authentication.getPrincipal().getUsername()}">Guest User</a>                		
+        					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>                        
+                         <ul class="dropdown-menu" role="menu">
+                         	 <li><a href="/useredit"><span class="glyphicon glyphicon-user"></span> Edit profile</a></li>
+                             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                         </ul>
+                         </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="margin-top: 70px;">
+        <center>
+            <h1>Upload Flight Detail</h1>
+        </center>
+        <form action="#" th:action="@{/flightinput}" method="post" th:object="${flight}">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Origin:</label>
+                            <select th:field="*{origin} " class="form-control">
+                                <option th:each="p : ${listDO}" th:value="${p}" th:text="${p}" />
+                            </select>
+                            <span class="alert-error" th:if="${#fields.hasErrors('origin')}"
+                                th:errors="*{origin}">Origin
+                                error</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Destination:</label>
+                            <select th:field="*{destination}" class="form-control">
+                                <option th:each="p : ${listDO}" th:value="${p}" th:text="${p}" />
+                            </select>
+                            <span class="alert-error" th:if="${#fields.hasErrors('destination')}"
+                                th:errors="*{destination}">Destination error</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Flight Number:</label>
+                            <select th:field="*{flightNumber}" class="form-control">
+                                <option th:each="p : ${listFlightNo}" th:value="${p}" th:text="${p}" />
+                            </select>
+                            <span class="alert-error" th:if="${#fields.hasErrors('flightNumber')}"
+                                th:errors="*{flightNumber}">Duration error</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Duration:</label>
+                            <input type="text" th:field="*{duration}" class="form-control" />
+                            <span class="alert-error" th:if="${#fields.hasErrors('duration')}"
+                                th:errors="*{duration}">Duration
+                                error</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Flight Date:</label>
+                            <input type="date" th:field="*{flightDate}" class="form-control" />
+                            <span class="alert-error" th:if="${#fields.hasErrors('flightDate')}"
+                                th:errors="*{flightDate}">Flight_date error</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Flight Time:</label>
+                            <input type="time" th:field="*{flightTime}" class="form-control" />
+                            <span class="alert-error" th:if="${#fields.hasErrors('flightTime')}"
+                                th:errors="*{flightTime}">Flight_time error</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>FirstClass:</label>
+                            <label>seats:<input type="text" th:field="*{seats.firstSeat}"
+                                    class="form-control" /></label>
+
+                            <label>cost:<input type="text" th:field="*{seats.firstCost}" class="form-control" /></label>
+
+                            <!--<span class="alert-error" th:if="${#fields.hasErrors('seats')}" th:errors="*{seats}">Seats
+                                    error</span>-->
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>BussinessClass:</label>
+                            <label>seats:<input type="text" th:field="*{seats.bussinessSeat}"
+                                    class="form-control" /></label>
+
+                            <label>cost:<input type="text" th:field="*{seats.bussinessCost}"
+                                    class="form-control" /></label>
+
+                            <!--<span class="alert-error" th:if="${#fields.hasErrors('seats')}" th:errors="*{seats}">Seats
+                                    error</span>-->
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>EconomyClass:</label>
+                            <label>seats:<input type="text" th:field="*{seats.economySeat}"
+                                    class="form-control" /></label>
+
+                            <label>cost:<input type="text" th:field="*{seats.economyCost}"
+                                    class="form-control" /></label>
+
+                            <!--<span class="alert-error" th:if="${#fields.hasErrors('seats')}" th:errors="*{seats}">Seats
+                                    error</span>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+            <div class="form-group">
+                <div></div>
+                <div><button class="btn btn-success btn-block" type="submit">Upload</button></div>
+                <div></div>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Insert title here</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <style>
+  body{
+	background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+	}
+	</style>  
+    td {
+      padding: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header" data-toggle="collapse" data-target="#myNavbar">
+        <button class="navbar-toggle">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand">SkyDrago Airlines</a>
+      </div>
+      <div class="collapse navbar-collapse " id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/home">Home</a></li>
+          <li class="active"><a href="#">checkIn Passenger</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+                   
+                    <li class="dropdown">
+                        <div class="btn btn-group">
+                        	<a href="#" class="btn btn-primary" th:text="${#authentication.getPrincipal().getUsername()}">Guest User</a>                		
+        					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>                        
+                         <ul class="dropdown-menu" role="menu">
+                             <li><a href="/useredit"><span class="glyphicon glyphicon-user"></span> Edit profile</a></li>
+                             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                         </ul>
+                         </div>
+                    </li>
+                </ul>
+      </div>
+    </div>
+  </nav>
+  <div align="center" style="margin-top:70px">
+
+    <form action="" class="form-inline" th:action="@{/checkinsave}" method="post" th:object="${passenger}">
+      <table>
+        <tr>
+          <div class="form-group">
+            <td>Flight ID:</td>
+            <td><input class="form-control" type="text" th:field="*{flight.id}" readonly="readonly" /></td>
+          </div>
+          <div class="form-group">
+            <td>Passenger ID:</td>
+            <td><input class="form-control" type="text" th:field="*{id}" readonly="readonly" /></td>
+          </div>
+
+        </tr>
+        <tr>
+          <div class="form-group">
+            <td>FirstName:</td>
+            <td><input class="form-control" type="text" th:field="*{firstName}" readonly="readonly"></td>
+          </div>
+          <div class="form-group">
+            <td>LastName:</td>
+            <td><input class="form-control" type="text" th:field="*{lastName}" readonly="readonly"></td>
+          </div>
+        </tr>
+        <tr>
+          <div class="form-group">
+            <td>Username:</td>
+            <td><input class="form-control" type="text" th:field="*{userName}" readonly="readonly" /></td>
+          </div>
+          <div class="form-group">
+            <td>Gender:</td>
+            <td><input class="form-control" type="text" th:field="*{gender}" readonly="readonly"></td>
+          </div>
+        </tr>
+        <tr>
+          <div class="form-group">
+            <td>MobileNumber:</td>
+            <td><input class="form-control" type="number" th:field="*{mobileNumber}" readonly="readonly"></td>
+          </div>
+          <div class="form-group">
+            <td>Email:</td>
+            <td><input class="form-control" type="email" th:field="*{emailId}" readonly="readonly"></td>
+          </div>
+        </tr>
+        <tr>
+          <div class="form-group">
+            <td>FlightClass:</td>
+            <td><input class="form-control" type="text" th:field="*{flightClass}" readonly="readonly"></td>
+          </div>
+          <div class="form-group">
+            <td>Seats Booked:</td>
+            <td><input class="form-control" type="number" th:field="*{noOfSeatsBooked}" readonly="readonly"></td>
+          </div>
+          <div class="form-group">
+            <td>Amount Paid:</td>
+            <td><input class="form-control" type="number" th:field="*{priceOfTicket}" readonly="readonly"></td>
+          </div>
+        </tr>
+      </table>
+      <hr>
+      <br><br>
+      <div>
+        <div class="form-group">
+          <label for="seatnumber:">SeatNumber:</label>
+          <input type="number" id="seatnumber" class="form-control" placeholder="Enter seatnumber" th:field="*{checkIn.seatNumber}" th:required="required" />
+        </div>
+        <br><br>
+        <div class="form-group">
+          <label for="gatenumber:">GateNumber:</label>
+          <input type="number" id="gatenumber" class="form-control" placeholder="Enter gatenumber" th:field="*{checkIn.gateNumber}" th:required="required" />
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-success">Confirm</button>
+      <br><br>
+    </form>
+
+  </div>
+</body>
+
+</html>

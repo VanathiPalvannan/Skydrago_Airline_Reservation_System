@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>customer feed back</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+</head>
+<style>
+:root {
+  --primary-color: #1e90ff;
+}
+body {
+  margin: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  background-image: linear-gradient(135deg, #e9defa 10%, #fbfcdb 100%);
+  background-repeat: no-repeat;
+ background-size: 100% 100%;
+}
+header {
+  background-color: var(--primary-color);
+}
+header h1 {
+  color: #ffffff;
+  margin: 0;
+  padding: 1rem;
+  font-size: 1.3rem;
+  text-align: center;
+}
+main {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+#description,
+.survey-question {
+  color: var(--primary-color);
+  margin: 1rem;
+  font-size: 1rem;
+}
+.survey-question {
+  font-size: 1.4rem;
+}
+/* peronal info section of form */
+.personal-info > li {
+  display: flex;
+  flex-flow: row wrap;
+  align-items:center;
+  justify-content: center;
+}
+.personal-info > li > label {
+  flex: 1 1 120px;
+  max-width: 150px;
+}
+.personal-info > li > input,
+select {
+  flex: 1 1 200px;
+  padding: 0.7rem;
+  border: 1px solid rgb(135, 206, 235);
+  max-width: 300px;
+  color: #444444;
+  font-size: 1rem;
+}
+.personal-info select {
+  max-width: 322px;
+  background: transparent;
+  color: #444444;
+}
+li {
+  list-style-type: none;
+  padding: 0.5rem;
+}
+
+li > select option {
+  color: #00622e;
+}
+
+/*feed back quetions, comments and submit buttonx`*/
+.feedback-choice{
+  display:block;
+  margin:0 auto;
+}
+.feedback-choice > li > label {
+  color: #555555;
+}
+
+.comments textarea {
+  border: 1px solid rgb(135, 206, 235);
+  outline: none;
+  padding: 1.2rem;
+  display: block;
+  margin: 0 auto;
+}
+
+.personal-info input:focus {
+  box-shadow: 0 0 5px 1px #1e90ff;
+  outline: none;
+}
+/*input validation*/
+.personal-info input:focus:invalid {
+  outline: none;
+  box-shadow: 0 0 5px 1px rgba(228, 54, 54, 0.842);
+}
+.submit-btn {
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 0.5rem;
+  background: #1e90ff;
+  color: #fff;
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+  border: none;
+  border-radius: 5px;
+}
+
+#submit:hover {
+  background: #0252a3;
+  color: #ffffff;
+  transition: background 300ms ease-in;
+}
+
+@media (min-width: 1281px) {
+  .container {
+    width: 70vw;
+    margin: 0 auto;
+  }
+  main {
+    border: 2px solid var(--primary-color);
+  }
+  header h1 {
+    padding: 2rem;
+  }
+  textarea {
+    width: 64%;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .container {
+    width: 60vw;
+    margin: 0 auto;
+    border: 2px solid var(--primary-color);
+  }
+  header h1 {
+    padding: 2rem;
+  }
+}
+
+</style>
+<body id="app">
+  <div class="container">
+    <header>
+      <h1 id="title">Customer Feedback</h1>
+    </header>
+    <main>
+      <p id="description">Please let us know about your experience with our product and service</p>
+      <form action="#" th:action="@{/feedback}" method="post" th:object="${feedback}">
+
+        <ul class="personal-info">
+          <li>
+            <label for="name" id="name-label">Full Name </label>
+            <input type="text" th:field="*{name}" id="name" required placeholder="Enter your first name here">
+          </li>
+
+          <li>
+            <label for="email" id="email-label">Email </label>
+            <input type="email" th:field="*{email}" id="email" required placeholder="Enter your email here">
+          </li>
+
+          <li>
+            <label for="phone" id="phone-label">Phone</label>
+            <input type="tel" th:field="*{phno}" id="phone" required minlength="10" maxlength="10" placeholder="Enter your number 10 digits">
+          </li>
+        </ul>
+
+        <p class="survey-question">Q: How satisfied are you with our company service overall?</p>
+        <ul class="feedback-choice">
+          <li>
+            <input type="radio" th:field="*{satisfaction}" name="satisfaction-scale" id="satisfaction-scale-5" value="scale-1 Very satisfied">
+            <label for="satisfaction-scale-5">Very satisfied</label>
+          </li>
+
+		  <li>
+            <input type="radio" th:field="*{satisfaction}"  name="satisfaction-scale" id="satisfaction-scale-3" value="scale-2 Satisfied">
+            <label for="satisfaction-scale-3">Satisfied</label>
+          </li>
+
+          <li>
+            <input type="radio" th:field="*{satisfaction}"  name="satisfaction-scale" id="satisfaction-scale-4" value="scale-3 Somewhat satisfied">
+            <label for="satisfaction-scale-4">Somewhat satisfied</label>
+          </li>
+
+          
+
+          <li>
+            <input type="radio" th:field="*{satisfaction}"  name="satisfaction-scale" id="satisfaction-scale-2" value="scale-4 Neither satisfied nor dissatisfied">
+            <label for="satisfaction-scale-2">Neither satisfied nor dissatisfied</label>
+          </li>
+
+          <li>
+            <input type="radio" th:field="*{satisfaction}"  name="satisfaction-scale" id="satisfaction-scale-1" value="scale-5 Not satisfied">
+            <label for="satisfaction-scale-1">Not satisfied</label>
+          </li>
+        </ul>
+
+        <p class="survey-question">Q: Which of the following words would you use to describe our service (check all that apply)</p>
+        <ul class="feedback-choice">
+          <li>
+            <input type="radio" th:field="*{service}"  name="feedback-scale" id="feedback-scale-1" value="scale-1 Reliable">
+            <label for="feedback-scale-1">Reliable</label>
+          </li>
+
+          <li>
+            <input type="radio" th:field="*{service}"   name="feedback-scale" id="feedback-scale-2" value="scale-2 Highquality">
+            <label for="feedback-scale-2">Highquality</label>
+          </li>
+
+          <li>
+            <input type="radio" th:field="*{service}"   name="feedback-scale" id="feedback-scale-3" value="scale-3 Useful">
+            <label for="feedback-scale-3">Useful</label>
+          </li>
+
+          <li>
+            <input type="radio" th:field="*{service}"   name="feedback-scale" id="feedback-scale-4" value="scale-4 Good value for money">
+            <label for="feedback-scale-4">Good value for money</label>
+          </li>
+
+          <li>
+            <input type="radio" th:field="*{service}"   name="feedback-scale" id="feedback-scale-5" value="scale-5 Overpriced">
+            <label for="feedback-scale-5">Overpriced</label>
+          </li>
+
+          <li>
+            <input type="radio" th:field="*{service}"   name="feedback-scale" id="feedback-scale-6" value="scale-6 Poor quality">
+            <label for="feedback-scale-6">Poor quality</label>
+          </li>
+        </ul>
+        <p class="survey-question">Please list any comments or suggestions you have</p>
+        <p class="comments"><textarea name="comments" id="comments" cols="35" rows="4" placeholder="Enter your feedback here ..."></textarea></p>
+        <p><input type="submit"  th:field="*{comments}"   value="Submit" id="submit" class="submit-btn"></p>
+
+      </form>
+    </main>
+    
+  </div>
+  
+ 
+</body>
+
+</html>

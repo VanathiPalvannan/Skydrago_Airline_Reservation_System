@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>registered flight details</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style type="text/css">
+		body{
+			background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+			height:597px;
+		}
+		 
+	</style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header" data-toggle="collapse" data-target="#myNavbar">
+                <button class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">SkyDrago Airlines</a>
+            </div>
+            <div class="collapse navbar-collapse " id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/home">Home</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="input">Upload details</a></li>
+                    <li class="active"><a href="view">Flight Details</a></li>
+                    <li sec:authorize="hasAnyAuthority('USER')"><a href="ticketsbooked">Tickets Booked</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a href="userview">User Details</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')" ><a href="/feedbackview">Feedback</a></li>
+                	<li sec:authorize="hasAnyAuthority('USER')"><a href="aboutus">About Us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                   <li class="dropdown">
+                        <div class="btn btn-group">
+                        	<a href="#" class="btn btn-primary" th:text="${#authentication.getPrincipal().getUsername()}">Guest User</a>                		
+        					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>                        
+                         <ul class="dropdown-menu" role="menu">
+                         	 <li><a href="/useredit"><span class="glyphicon glyphicon-user"></span> Edit profile</a></li>
+                             <li><a href="feedback"><span class="glyphicon glyphicon-envelope"></span> Feedback</a></li>
+                             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                         </ul>
+                         </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="margin-top: 70px;">
+    <center><h1>Flight Details</h1></center>
+    
+    <div align="center" class="table-responsive">
+        <table class="table table-bordered">
+            <tr class="bg-primary">
+                <th>id</th>
+                <th>origin</th>
+                <th>Destination</th>
+                <th>Duration</th>
+                <th>Flight date</th>
+                <th>Flight number</th>
+                <th>Flight time</th>
+                <th colspan="2">FirstClass</th>
+                <th colspan="2">BussinessClass</th>
+                <th colspan="2">EconomyClass</th>
+                <th>Seats</th>
+                <th><div align="center" sec:authorize="hasAnyAuthority('ADMIN')">
+                    Operations</div>
+                    <div align="center" sec:authorize="hasAnyAuthority('USER')">
+                    Book Flight</div>
+                    </th>
+                
+            </tr>
+            <tr class="active" th:each="flight : ${list}">
+                <td th:text="${flight.id}"> id</td>
+                <td th:text="${flight.origin}">Origin</td>
+                <td th:text="${flight.destination}">Destinstion</td>
+                <td th:text="${flight.duration}">Duration</td>
+                <td th:text="${flight.flightDate}">Flight_date</td>
+                <td th:text="${flight.flightNumber}">Flight_number</td>
+                <td th:text="${flight.flightTime}">Flight_time</td>
+                <td th:text="'seats: '+${flight.seats?.firstSeat}">FirstClass seat</td>
+                <td th:text="'cost: '+${flight.seats?.firstCost}">FirstClass cost</td>
+                <td th:text="'seats: '+${flight.seats?.bussinessSeat}">BussinessClass seat</td>
+                <td th:text="'cost: '+${flight.seats?.bussinessCost}">BussinessClass cost</td>
+                <td th:text="'seats: '+${flight.seats?.economySeat}">EconomyClass seat</td>
+                <td th:text="'cost: '+${flight.seats?.economyCost}">EconomyClass cost</td>
+                <td th:text="${flight.seats?.firstSeat}+${flight.seats?.economySeat}+${flight.seats?.bussinessSeat}"> 
+                </td>
+                  <td>
+                    <div sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a class="btn btn-warning" th:href="@{'/edit/' + ${flight.id}}">Edit</a>
+                        <a class="btn btn-danger" th:href="@{'/delete/' + ${flight.id}}">Delete</a>
+                        <a class="btn btn-success" th:href="@{'/bookedPassengers/' + ${flight.id}}">Booked</a>
+                    </div>
+                    <div sec:authorize="hasAnyAuthority('USER')">
+                        <form th:action="@{'/bookdetail/' + ${flight.id}}">
+                        	<button class="btn btn-success" th:disabled="${flight.isBooked}">Book</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <span th:text="${deleteException}"></span>
+    <div align="center" sec:authorize="hasAnyAuthority('ADMIN')">
+        <span th:text="${deleteException}"></span>
+        <a class="btn btn-primary" href="/input">Add New Flight</a>
+    </div>
+    </div>
+
+</div>
+</body>
+</ht>

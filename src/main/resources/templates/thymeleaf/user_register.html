@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Create new user account</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    label {
+      font-size: 17px;
+      float: left;
+    }
+
+    body {
+      background-image: linear-gradient(135deg, #007adf 10%, #00ecbc 100%);
+      height:597px;
+    }
+
+    
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header" data-toggle="collapse" data-target="#myNavbar">
+        <button class="navbar-toggle">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand">SkyDrago Airlines</a>
+      </div>
+      <div class="collapse navbar-collapse " id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Index</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="login">Login</a></li>
+          <li class="active"><a href="userregister">Register</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div style="margin-top:70px;">
+    <center>
+      <h1>Create New Account</h1>
+    </center>
+    <br>
+    <div class="col-md-3"></div>
+    
+      <form action="#" th:action="@{/saveuserreg}" method="post" th:object="${user}">
+        <div class="col-md-6" align="center">
+        <div class="row">
+          <div class="col-md-6">
+            <div>
+              <label for="firstName" class="form-label">FirstName:</label>
+              <input type="text" class="form-control" th:field="*{firstName}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName
+                error</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div>
+              <label for="lastName" class="form-label">LastName:</label>
+              <input type="text" class="form-control" th:field="*{lastName}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName
+                error error</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div>
+              <label for="email" class="form-label">Email:</label>
+              <input type="text" class="form-control" th:field="*{email}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+                error</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div>
+              <label for="mobileNumber" class="form-label">MobileNumber:</label>
+              <input type="text" class="form-control" th:field="*{mobileNumber}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('mobileNumber')}"
+                th:errors="*{mobileNumber}">MobileNumber error</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div>
+              <label for="aadharNo" class="form-label">AadharNumber:</label>
+              <input type="text" class="form-control" th:field="*{aadharNo}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('aadharNo')}" th:errors="*{aadharNo}">AadharNumber
+                error</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div>
+              <label for="dob" class="form-label">DateOfBirth:</label>
+              <input type="date" class="form-control" th:field="*{dob}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}">DateOfBirth
+                error</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div>
+              <label for="username" class="form-label">Username:</label>
+              <input type="text" class="form-control" th:field="*{userName}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Username
+                error</span>
+            </div>
+
+          </div>
+          <div class="col-md-4">
+            <div>
+              <label for="gender" class="form-label"></label><br><br>
+              <label for="gender" class="form-label">Gender:</label>
+              <div class="input-group">
+                <input type="radio" class="form-check-input indicator" th:field="*{gender}" value="Male" />Male
+                <input type="radio" class="form-check-input" th:field="*{gender}" value="Female" />Female
+              </div>
+              <span class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Gender
+                error</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div>
+              <label for="password" class="form-label">Password:</label>
+              <input type="password" class="form-control" th:field="*{password}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password
+                error</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div>
+              <label for="rPassword" class="form-label">RePassword:</label>
+              <input type="password" class="form-control" th:field="*{rPassword}" />
+              <span class="text-danger" th:if="${#fields.hasErrors('rPassword')}" th:errors="*{rPassword}">RePassword
+                error</span>
+              <span class="text-warning" th:text="${passerror}"></span>
+            </div>
+          </div>
+        </div>
+        <span class="text-warning" th:text="${errormsg}"></span>
+        <br>
+        <div>
+          <button type="submit" class="btn btn-block btn-success">Register</button>
+        </div>
+        <br>
+        <div>
+          <span>Have account?<a href="/login">Login here!</a></span>
+        </div>
+        </div>
+        <div class="col-md-3"></div>
+      </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>home</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<style type="text/css">
+		body{
+			background-image:url('/img/index1.jpg');
+			background-size:cover;
+			
+		}
+	</style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header" data-toggle="collapse" data-target="#myNavbar">
+                <button class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">SkyDrago Airlines</a>
+            </div>
+            <div class="collapse navbar-collapse " id="myNavbar">
+                <ul class="nav navbar-nav">
+                	<li class="active"><a href="/">Index</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+     				<li><a href="login">Login</a></li>			
+					<li><a href="userregister">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="margin:70px;">
+        <h1>Welcome to SkyDrago Airlines</h1>
+        <h2>Book your tickets,happy journey</h2>
+        <p>Please <a href="login">Login</a> To continue with our application</p>
+        <p><a href="home">Skip</a> for now</p>
+    </div>
+
+</body>
+
+</html>
